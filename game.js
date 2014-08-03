@@ -37,6 +37,9 @@ BasicGame.Game.prototype = {
     // map.setCollision(3);
     // map.setCollision(4);
     map.setCollisionBetween(0,255);
+    map.setCollisionBetween(4, 11);
+    map.setCollisionBetween(36, 40);
+    map.setCollisionBetween(68, 71);
     
     layer_back3 = map.createLayer('Background3');
     layer_back2 = map.createLayer('Background2');
@@ -51,11 +54,11 @@ BasicGame.Game.prototype = {
     // layer_fore = map.createLayer('Foreground');
 
     //  Un-comment this on to see the collision tiles
-    // layer_mid.debug = true;
+    layer_mid.debug = true;
 
     layer_mid.resizeWorld();
     
-    player = this.add.sprite(16, 16, 'player');
+    player = this.add.sprite(16, 650, 'player');
     
     this.physics.enable(player);
     
@@ -106,8 +109,9 @@ BasicGame.Game.prototype = {
   },
   
   render: function () {
-  //   //  Every loop we need to render the un-scaled game canvas to the displayed scaled canvas:
+  //  Every loop we need to render the un-scaled game canvas to the displayed scaled canvas:
     this.pixel.context.drawImage(this.canvas, 0, 0, this.width, this.height, 0, 0, this.pixel.width, this.pixel.height);
+    this.game.debug.body(player);
   },
 
   quitGame: function (pointer) {

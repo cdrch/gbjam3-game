@@ -14,10 +14,10 @@ BasicGame.MainMenu.prototype = {
     //  Here all we're doing is playing some music and adding a picture and button
     //  Naturally I expect you to do something significantly better :)
 
-    this.add.sprite(0, 0, 'titlepage');
+    // this.add.sprite(0, 0, 'titlepage');
 
     this.loadingText = this.add.text(80, 72, "Press Z or tap/click game to start", { font: "6px monospace", fill: "#fff" });
-    this.loadingText.anchor.setTo(0.5, 0.5);
+    //this.loadingText.anchor.setTo(0.5, 0.5);
 
   },
 
