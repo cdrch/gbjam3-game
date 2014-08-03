@@ -105,10 +105,10 @@ BasicGame.Game.prototype = {
     this.state.start('MainMenu');
   },
   
-  // render: function () {
+  render: function () {
   //   //  Every loop we need to render the un-scaled game canvas to the displayed scaled canvas:
-  //   this.pixel.context.drawImage(this.canvas, 0, 0, this.width, this.height, 0, 0, this.pixel.width, this.pixel.height);
-  // },
+    this.pixel.context.drawImage(this.canvas, 0, 0, this.width, this.height, 0, 0, this.pixel.width, this.pixel.height);
+  },
 
   quitGame: function (pointer) {
 
