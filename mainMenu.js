@@ -16,10 +16,8 @@ BasicGame.MainMenu.prototype = {
 
     this.add.sprite(0, 0, 'titlepage');
 
-    this.loadingText = this.add.text(510, 520, "Press Z or tap/click game to start", { font: "24px monospace", fill: "#fff" });
+    this.loadingText = this.add.text(80, 72, "Press Z or tap/click game to start", { font: "6px monospace", fill: "#fff" });
     this.loadingText.anchor.setTo(0.5, 0.5);
-    this.add.text(510, 680, "image assets Copyright (c) 2002 Ari Feldman", { font: "16px monospace", fill: "#fff", align: "center"}).anchor.setTo(0.5, 0.5);
-    this.add.text(510, 700, "sound assets Copyright (c) 2012 - 2013 Devin Watson", { font: "16px monospace", fill: "#fff", align: "center"}).anchor.setTo(0.5, 0.5);
 
   },
 

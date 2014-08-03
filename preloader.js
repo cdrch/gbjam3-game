@@ -42,7 +42,7 @@ BasicGame.Preloader.prototype = {
     //this.load.audio('titleMusic', ['audio/main_menu.mp3']);
     //  + lots of other required assets here
     
-    this.load.tilemap('level1', 'assets/testingmap1.json', null, Phaser.Tilemap.TILED_JSON);
+    this.load.tilemap('level1', 'assets/testingmap2.json', null, Phaser.Tilemap.TILED_JSON);
     this.load.image('tiles1', 'assets/4-color-tileset.png');
     this.load.image('player', 'assets/checkerplayer.png');
 

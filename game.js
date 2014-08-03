@@ -25,18 +25,20 @@ BasicGame.Game.prototype = {
 
     map.addTilesetImage('4-color-tileset', 'tiles1');
     
-    map.setCollisionBetween(0, 5);
+    map.setCollision(2);
+    map.setCollision(3);
+    map.setCollision(4);
     
     layer_back = map.createLayer('Background');
     
-    layer_col = map.createLayer('Collision');
+    // layer_col = map.createLayer('Collision');
     
-    layer_fore = map.createLayer('Foreground');
+    // layer_fore = map.createLayer('Foreground');
 
     //  Un-comment this on to see the collision tiles
-    layer_col.debug = true;
+    // layer_col.debug = true;
 
-    layer_col.resizeWorld();
+    layer_back.resizeWorld();
     
     player = this.add.sprite(16, 16, 'player');
     
@@ -59,7 +61,7 @@ BasicGame.Game.prototype = {
     
     //this.sea.y += 2;
     
-    this.physics.arcade.collide(player, layer_col);
+    this.physics.arcade.collide(player, layer_back);
     
     player.body.velocity.x = 0;
 
@@ -80,7 +82,7 @@ BasicGame.Game.prototype = {
         player.body.velocity.x = 150;
     }
     
-    map.setTileIndexCallback(1, this.justChecking, this);
+    //map.setTileIndexCallback(2, this.justChecking, this);
 
   },
   
