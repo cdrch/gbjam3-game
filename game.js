@@ -4,12 +4,19 @@ BasicGame.Game = function (game) {
 
 // Global Variables
 var map;
-var layer_back;
-var layer_col;
-var layer_fore;
+var layer_back3;
+var layer_back2;
+var layer_back1;
+var layer_mid;
+var layer_fore1;
+var layer_fore2;
+var layer_fore3;
 
 var player;
 var cursors;
+
+// Global Statics
+
 
 BasicGame.Game.prototype = {
   
@@ -23,22 +30,30 @@ BasicGame.Game.prototype = {
 
     map = this.add.tilemap('level1');
 
-    map.addTilesetImage('4-color-tileset', 'tiles1');
+    map.addTilesetImage('gbjam3-game-tile-atlas-1', 'tile-atlas-1');
     
-    map.setCollision(2);
-    map.setCollision(3);
-    map.setCollision(4);
+    // setCollision, or setCollisionBetween for ranges of tiles
+    // map.setCollision(2);
+    // map.setCollision(3);
+    // map.setCollision(4);
+    map.setCollisionBetween(0,255);
     
-    layer_back = map.createLayer('Background');
+    layer_back3 = map.createLayer('Background3');
+    layer_back2 = map.createLayer('Background2');
+    layer_back1 = map.createLayer('Background1');
+    layer_mid = map.createLayer('Middleground');
+    layer_fore1 = map.createLayer('Foreground1');
+    layer_fore2 = map.createLayer('Foreground2');
+    layer_fore3 = map.createLayer('Foreground3');
     
     // layer_col = map.createLayer('Collision');
     
     // layer_fore = map.createLayer('Foreground');
 
     //  Un-comment this on to see the collision tiles
-    // layer_col.debug = true;
+    // layer_mid.debug = true;
 
-    layer_back.resizeWorld();
+    layer_mid.resizeWorld();
     
     player = this.add.sprite(16, 16, 'player');
     
@@ -61,7 +76,7 @@ BasicGame.Game.prototype = {
     
     //this.sea.y += 2;
     
-    this.physics.arcade.collide(player, layer_back);
+    this.physics.arcade.collide(player, layer_mid);
     
     player.body.velocity.x = 0;
 
@@ -90,10 +105,10 @@ BasicGame.Game.prototype = {
     this.state.start('MainMenu');
   },
   
-  render: function () {
-    //  Every loop we need to render the un-scaled game canvas to the displayed scaled canvas:
-    // pixel.context.drawImage(this.canvas, 0, 0, this.width, this.height, 0, 0, pixel.width, pixel.height);
-  },
+  // render: function () {
+  //   //  Every loop we need to render the un-scaled game canvas to the displayed scaled canvas:
+  //   this.pixel.context.drawImage(this.canvas, 0, 0, this.width, this.height, 0, 0, this.pixel.width, this.pixel.height);
+  // },
 
   quitGame: function (pointer) {
 

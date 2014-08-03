@@ -5,6 +5,27 @@ BasicGame.Boot = function (game) {
 };
 
 BasicGame.Boot.prototype = {
+  
+  init: function () {
+    //  Hide the un-scaled game canvas
+    this.canvas.style['display'] = 'none';
+ 
+    //  Create our scaled canvas. It will be the size of the game * whatever scale value you've set
+    this.pixel.canvas = Phaser.Canvas.create(this.width * this.pixel.scale, this.height * this.pixel.scale);
+ 
+    //  Store a reference to the Canvas Context
+    this.pixel.context = this.pixel.canvas.getContext('2d');
+ 
+    //  Add the scaled canvas to the DOM
+    Phaser.Canvas.addToDOM(this.pixel.canvas);
+ 
+    //  Disable smoothing on the scaled canvas
+    Phaser.Canvas.setSmoothingEnabled(this.pixel.context, false);
+ 
+    //  Cache the width/height to avoid looking it up every render
+    this.pixel.width = this.pixel.canvas.width;
+    this.pixel.height = this.pixel.canvas.height;
+  },
 
   preload: function () {
 
@@ -41,6 +62,11 @@ BasicGame.Boot.prototype = {
     //  So now let's start the real preloader going
     this.state.start('Preloader');
 
+  },
+  
+  render: function () {
+    //  Every loop we need to render the un-scaled game canvas to the displayed scaled canvas:
+    this.pixel.context.drawImage(this.canvas, 0, 0, this.width, this.height, 0, 0, this.pixel.width, this.pixel.height);
   }
 
 };

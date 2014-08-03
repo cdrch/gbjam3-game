@@ -32,7 +32,7 @@ BasicGame.MainMenu.prototype = {
   
   render: function () {
     //  Every loop we need to render the un-scaled game canvas to the displayed scaled canvas:
-    // pixel.context.drawImage(this.canvas, 0, 0, this.width, this.height, 0, 0, pixel.width, pixel.height);
+    this.pixel.context.drawImage(this.canvas, 0, 0, this.width, this.height, 0, 0, this.pixel.width, this.pixel.height);
   },
 
   startGame: function (pointer) {
