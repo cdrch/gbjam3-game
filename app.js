@@ -2,7 +2,7 @@ window.onload = function() {
 
   //  Create your Phaser game and inject it into the gameContainer div.
   //  We did it in a window.onload event, but you can do it anywhere (requireJS load, anonymous function, jQuery dom ready, - whatever floats your boat)
-  var game = new Phaser.Game(160, 144, Phaser.CANVAS, 'gameContainer');
+  var game = new Phaser.Game(160, 144, Phaser.CANVAS, '');
   
   // For use with scaling
   game.pixel = { scale: 4, canvas: null, context: null, width: 0, height: 0 };
