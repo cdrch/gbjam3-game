@@ -32,6 +32,9 @@ BasicGame.Preloader.prototype = {
 	    this.load.tilemap('testlevel1', 'assets/testingmap3.json', null, Phaser.Tilemap.TILED_JSON);
 	    this.load.image('tiles1', 'assets/4-color-tileset.png');
 	    this.load.image('player', 'assets/checkerplayer.png');
+	    this.load.tilemap('layertest1', 'assets/layertest1.json', null, Phaser.Tilemap.TILED_JSON);
+	    this.load.tilemap('layertest2', 'assets/layertest2.json', null, Phaser.Tilemap.TILED_JSON);
+	    this.load.tilemap('layertest3', 'assets/layertest3.json', null, Phaser.Tilemap.TILED_JSON);
 	    
 	    this.load.tilemap('level1', 'assets/level1.json', null, Phaser.Tilemap.TILED_JSON);
 	    this.load.image('tile-atlas-1', 'assets/gbjam3-game-tile-atlas-1.png');
