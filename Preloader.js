@@ -8,7 +8,7 @@ BasicGame.Preloader.prototype = {
 	preload: function () {
 		
 		//  Testing code for scaling
-		this.load.image('titlepage', 'kof.png');
+		this.load.image('testimage', 'kof.png');
 		
 		//  Show the loading progress bar asset we loaded in boot.js
     this.stage.backgroundColor = '#2d2d2d';
@@ -37,6 +37,7 @@ BasicGame.Preloader.prototype = {
     this.load.tilemap('layertest3', 'assets/layertest3.json', null, Phaser.Tilemap.TILED_JSON);
     
     this.load.tilemap('level1', 'assets/level1_v1_0_0.json', null, Phaser.Tilemap.TILED_JSON);
+    this.load.tilemap('level2', 'assets/level2_v1_0_0.json', null, Phaser.Tilemap.TILED_JSON);
     this.load.image('tile-atlas-1', 'assets/gbjam3-game-tile-atlas-1.png');
     
     this.load.spritesheet('player_sheet', 'assets/faunanim2.png', 18, 46);

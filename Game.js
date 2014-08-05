@@ -1,4 +1,3 @@
-
 BasicGame.Game = function (game) {
 
 	//	When a State is added to Phaser it automatically has the following properties set on it, even if they already exist:
@@ -22,6 +21,9 @@ BasicGame.Game = function (game) {
 
     //	You can use any of these from any function within this State.
     //	But do consider them as being 'reserved words', i.e. don't create a property for your own game called "world" or you'll over-write the world reference.
+    
+    // this.game.playerX = 100;
+    // this.game.playerY = 100;
 
 };
 
@@ -53,7 +55,7 @@ BasicGame.Game.prototype = {
 
     this.stage.backgroundColor = '#787878';
 
-    map = this.add.tilemap('level1');
+    map = this.add.tilemap(BasicGame.gameInfo.levelList[BasicGame.gameInfo.currentLevel]);
 
     map.addTilesetImage('gbjam3-game-tile-atlas-1', 'tile-atlas-1');
     
@@ -77,7 +79,7 @@ BasicGame.Game.prototype = {
     // collision_layer.debug = true;
     
     
-    this.player = this.add.sprite(16, 650, 'player_sheet');
+    this.player = this.add.sprite(BasicGame.playerInfo.playerX, BasicGame.playerInfo.playerY, 'player_sheet');
 
     this.player.animations.add('walk_left', [3, 4, 5, 4], 9, true);
     this.player.animations.add('walk_right', [2, 1, 0, 1], 9, true);
@@ -168,13 +170,15 @@ BasicGame.Game.prototype = {
 
     if (cursors.left.isDown)
     {
-        this.player.body.velocity.x = -150;
-        this.player.animations.play('walk_left');
+      this.player.facing = 'left';
+      this.player.body.velocity.x = -150;
+      this.player.animations.play('walk_left');
     }
     else if (cursors.right.isDown)
     {
-        this.player.body.velocity.x = 150;
-        this.player.animations.play('walk_right');
+      this.player.facing = 'right';
+      this.player.body.velocity.x = 150;
+      this.player.animations.play('walk_right');
     }
     else
     {
@@ -192,6 +196,11 @@ BasicGame.Game.prototype = {
     {
       this.displayText();
     }
+    
+    if (this.input.keyboard.isDown(Phaser.Keyboard.L)) 
+    {
+      this.goToLevel();
+    }
 	},
 	
 	checkCollision: function () {
@@ -203,15 +212,23 @@ BasicGame.Game.prototype = {
 	
 	displayText: function () {
 	 // var textBox = new Rectangle(0, 120, 160, 24);
-	  var currentText = this.add.text(10, 120, "click and drag me", { font: "8px Arial", fill: "#000000", align: "center" });
+	  var currentText = this.add.text(10, 120, BasicGame.gameInfo.levelPhrase[BasicGame.gameInfo.currentLevel], { font: "8px Arial", fill: "#000000", align: "center" });
 	  currentText.fixedToCamera = true;
+	},
+	
+	//  Level-switching functions
+	
+	goToLevel: function () {
+	  BasicGame.playerInfo.playerX = 100;
+	  BasicGame.playerInfo.playerY = 650;
+	  this.state.start('LevelSwitcher');
 	},
 	
 	render: function () {
 
 		//  Every loop we need to render the un-scaled game canvas to the displayed scaled canvas:
 	   // this.debug.bodyInfo(p, 32, 120);
-	   this.game.debug.body(this.player);
+	   //this.game.debug.body(this.player);
 	   BasicGame.pixel.context.drawImage(this.game.canvas, 0, 0, this.game.width, this.game.height, 0, 0, BasicGame.pixel.width, BasicGame.pixel.height);
 
 	},
