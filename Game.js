@@ -29,6 +29,7 @@ BasicGame.Game = function (game) {
 var map;
 var collision_layer;
 var foreground_layer;
+var starting_player_facing;
 
 var fG;
 
@@ -36,6 +37,9 @@ var fG;
 var cursors;
 
 // Global Statics
+
+var COLLISION_LAYER_NAME = 'Collision';
+var FOREGROUND_LAYER_NAME = 'Foreground';
 
 BasicGame.Game.prototype = {
 
@@ -49,7 +53,7 @@ BasicGame.Game.prototype = {
 
     this.stage.backgroundColor = '#787878';
 
-    map = this.add.tilemap('layertest2');
+    map = this.add.tilemap('level1');
 
     map.addTilesetImage('gbjam3-game-tile-atlas-1', 'tile-atlas-1');
     
@@ -65,44 +69,65 @@ BasicGame.Game.prototype = {
     map.setCollisionBetween(4, 11);
     map.setCollisionBetween(36, 40);
     map.setCollisionBetween(68, 71);
-    collision_layer = map.createLayer('Tile Layer 1');
-    this.player = this.add.sprite(16, 650, 'player');
-
+    
+    collision_layer = map.createLayer(COLLISION_LAYER_NAME);
+    
+    collision_layer.resizeWorld();
     //  Un-comment this on to see the collision tiles
     // collision_layer.debug = true;
-
-    collision_layer.resizeWorld();
     
+    
+    this.player = this.add.sprite(16, 650, 'player_sheet');
+
+    this.player.animations.add('walk_left', [3, 4, 5, 4], 9, true);
+    this.player.animations.add('walk_right', [2, 1, 0, 1], 9, true);
+    this.player.animations.add('face_left', [3], 9, true);
+    this.player.animations.add('face_right', [2], 9, true);
+    this.player.animations.add('jump_left', [4], 9, true);
+    this.player.animations.add('jump_right', [1], 9, true);
     
     this.game.physics.enable(this.player);
     
     this.physics.arcade.gravity.y = 250;
 
-    this.player.body.bounce.y = 0.2;
+    this.player.body.bounce.y = 0.0;
     this.player.body.linearDamping = 1;
     this.player.body.collideWorldBounds = true;
+    
+    this.player.anchor.setTo(0.5, 0.5);
 
     this.camera.follow(this.player);
     
-    this.game.physics.enable(this.player);
-    
-    this.physics.arcade.gravity.y = 250;
-
-    this.player.body.bounce.y = 0.2;
-    this.player.body.linearDamping = 1;
-    this.player.body.collideWorldBounds = true;
+    this.player.facing = starting_player_facing;
 
     cursors = this.input.keyboard.createCursorKeys();
     
-    this.foeGroup = this.add.group();
+    // this.createTestBoxes();
     
+    // The foreground tile laye
+    foreground_layer = map.createLayer(FOREGROUND_LAYER_NAME);
+        
+	},
+
+	update: function () {
+
+  		//	Honestly, just about anything could go here. It's YOUR game after all. Eat your heart out!
+  		
+  		//this.sea.y += 2;
     
+      this.checkCollision();
+      this.processInput();
+      
+      //map.setTileIndexCallback(2, this.quitGame, this);
+	},
+	
+	//  Create-related functions
+	
+	createTestBoxes: function() {
+	  this.foeGroup = this.add.group();
     
     this.foeGroup.enableBody = true;
     this.foeGroup.physicsBodyType = Phaser.Physics.ARCADE;
-    
-    // The foreground tile laye
-    foreground_layer = map.createLayer('Tile Layer 2');
     
     for (var i = 0; i < 16; i++)
     {
@@ -114,52 +139,73 @@ BasicGame.Game.prototype = {
     }
     
     fG = this.foeGroup;
-    
-        
-	},
-
-	update: function () {
-
-  		//	Honestly, just about anything could go here. It's YOUR game after all. Eat your heart out!
-  		
-  		//this.sea.y += 2;
-    
-      
-      
-      this.game.physics.arcade.collide(this.player, collision_layer);
-      this.game.physics.arcade.collide(this.foeGroup, collision_layer);
-      this.game.physics.arcade.collide(this.player, this.foeGroup);
-      this.game.physics.arcade.collide(this.foeGroup, this.foeGroup);
-      
-      this.player.body.velocity.x = 0;
-  
-      if (cursors.up.isDown)
-      {
-          if (this.player.body.onFloor())
-          {
-              this.player.body.velocity.y = -200;
-          }
-      }
-  
-      if (cursors.left.isDown)
-      {
-          this.player.body.velocity.x = -150;
-      }
-      else if (cursors.right.isDown)
-      {
-          this.player.body.velocity.x = 150;
-      }
-      
-      //map.setTileIndexCallback(2, this.quitGame, this);
-
 	},
 	
-	CollisionD: function(obj1, obj2) {
+	//  Update-related functions
+	
+	processInput: function () {
+	  this.player.body.velocity.x = 0;
+	  
+	  if (this.player.body.onFloor() === false)
+	  {
+	    if (this.player.facing === 'left')
+      {
+        this.player.animations.play('jump_left');
+      }
+      else
+      {
+        this.player.animations.play('jump_right');
+      }
+	  }
+  
+    if (cursors.up.isDown)
+    {
+      if (this.player.body.onFloor())
+      {
+          this.player.body.velocity.y = -200;
+      }
+    }
 
-    alert('collision!');
-    this.state.start('MainMenu');
+    if (cursors.left.isDown)
+    {
+        this.player.body.velocity.x = -150;
+        this.player.animations.play('walk_left');
+    }
+    else if (cursors.right.isDown)
+    {
+        this.player.body.velocity.x = 150;
+        this.player.animations.play('walk_right');
+    }
+    else
+    {
+      if (this.player.facing === 'left')
+      {
+        this.player.animations.play('face_left');
+      }
+      else
+      {
+        this.player.animations.play('face_right');
+      }
+    }
     
-  },
+    if (this.input.keyboard.isDown(Phaser.Keyboard.X)) 
+    {
+      this.displayText();
+    }
+	},
+	
+	checkCollision: function () {
+	  this.game.physics.arcade.collide(this.player, collision_layer);
+    // this.game.physics.arcade.collide(this.foeGroup, collision_layer);
+    this.game.physics.arcade.collide(this.player, this.foeGroup);
+    // this.game.physics.arcade.collide(this.foeGroup, this.foeGroup);
+	},
+	
+	displayText: function () {
+	 // var textBox = new Rectangle(0, 120, 160, 24);
+	  var currentText = this.add.text(10, 120, "click and drag me", { font: "8px Arial", fill: "#000000", align: "center" });
+	  currentText.fixedToCamera = true;
+	},
 	
 	render: function () {
 

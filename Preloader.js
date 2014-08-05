@@ -11,33 +11,35 @@ BasicGame.Preloader.prototype = {
 		this.load.image('titlepage', 'kof.png');
 		
 		//  Show the loading progress bar asset we loaded in boot.js
-	    this.stage.backgroundColor = '#2d2d2d';
-	
-	    this.preloadBar = this.add.sprite(80, 72, 'preloaderBar');
-	    this.add.text(80, 60, "Loading...", { font: "6px monospace", fill: "#fff" });//.anchor.setTo(0.5, 0.5);
-	    // this.preloadBar.anchor.setTo(0.5, 0.5);
-	
-	    //  This sets the preloadBar sprite as a loader sprite.
-	    //  What that does is automatically crop the sprite from 0 to full-width
-	    //  as the files below are loaded in.
-	    this.load.setPreloadSprite(this.preloadBar);
-	
-	    //  Here we load the rest of the assets our game needs.
-	    this.load.image('titlepage', 'assets/titlepage.png');
-	    this.load.image('sea', 'assets/sea.png');
-	    // this.load.spritesheet('basic_enemy', 'assets/enemy.png', 32, 32);
-	    //this.load.audio('titleMusic', ['audio/main_menu.mp3']);
-	    //  + lots of other required assets here
-	    
-	    this.load.tilemap('testlevel1', 'assets/testingmap3.json', null, Phaser.Tilemap.TILED_JSON);
-	    this.load.image('tiles1', 'assets/4-color-tileset.png');
-	    this.load.image('player', 'assets/checkerplayer.png');
-	    this.load.tilemap('layertest1', 'assets/layertest1.json', null, Phaser.Tilemap.TILED_JSON);
-	    this.load.tilemap('layertest2', 'assets/layertest2.json', null, Phaser.Tilemap.TILED_JSON);
-	    this.load.tilemap('layertest3', 'assets/layertest3.json', null, Phaser.Tilemap.TILED_JSON);
-	    
-	    this.load.tilemap('level1', 'assets/level1.json', null, Phaser.Tilemap.TILED_JSON);
-	    this.load.image('tile-atlas-1', 'assets/gbjam3-game-tile-atlas-1.png');
+    this.stage.backgroundColor = '#2d2d2d';
+
+    this.preloadBar = this.add.sprite(80, 72, 'preloaderBar');
+    this.add.text(80, 60, "Loading...", { font: "6px monospace", fill: "#fff" });//.anchor.setTo(0.5, 0.5);
+    // this.preloadBar.anchor.setTo(0.5, 0.5);
+
+    //  This sets the preloadBar sprite as a loader sprite.
+    //  What that does is automatically crop the sprite from 0 to full-width
+    //  as the files below are loaded in.
+    this.load.setPreloadSprite(this.preloadBar);
+
+    //  Here we load the rest of the assets our game needs.
+    this.load.image('titlepage', 'assets/titlepage.png');
+    this.load.image('sea', 'assets/sea.png');
+    // this.load.spritesheet('basic_enemy', 'assets/enemy.png', 32, 32);
+    //this.load.audio('titleMusic', ['audio/main_menu.mp3']);
+    //  + lots of other required assets here
+    
+    this.load.tilemap('testlevel1', 'assets/testingmap3.json', null, Phaser.Tilemap.TILED_JSON);
+    this.load.image('tiles1', 'assets/4-color-tileset.png');
+    this.load.image('testPlayer', 'assets/checkerplayer.png');
+    this.load.tilemap('layertest1', 'assets/layertest1.json', null, Phaser.Tilemap.TILED_JSON);
+    this.load.tilemap('layertest2', 'assets/layertest2.json', null, Phaser.Tilemap.TILED_JSON);
+    this.load.tilemap('layertest3', 'assets/layertest3.json', null, Phaser.Tilemap.TILED_JSON);
+    
+    this.load.tilemap('level1', 'assets/level1_v1_0_0.json', null, Phaser.Tilemap.TILED_JSON);
+    this.load.image('tile-atlas-1', 'assets/gbjam3-game-tile-atlas-1.png');
+    
+    this.load.spritesheet('player_sheet', 'assets/faunanim2.png', 18, 46);
 
 	},
 
