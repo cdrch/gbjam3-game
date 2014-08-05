@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="100" height="100" tilewidth="8" tileheight="8">
+ <tileset firstgid="1" name="gbjam3-game-tile-atlas-1" tilewidth="8" tileheight="8">
+  <image source="gbjam3-game-tile-atlas-1.png" width="256" height="256"/>
+ </tileset>
+ <layer name="Background3" width="100" height="100">
+  <data encoding="base64" compression="zlib">
+   eJztwwEJAAAMBKH7/qUHy6Hgqqmqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqv8AX0MnEQ==
+  </data>
+ </layer>
+ <layer name="Background2" width="100" height="100">
+  <data encoding="base64" compression="zlib">
+   eJztxsEJgDAUBcE0oFaiVhKtRO3/5qvgH4PCDCxsawAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwJ9MaU5L8Yyzpi3txTNOT0c6i2ecK93pKR4AvugFtpoIuQ==
+  </data>
+ </layer>
+ <layer name="Background1" width="100" height="100">
+  <data encoding="base64" compression="zlib">
+   eJzt1ldqxDAYhdFsIL1uIr1uIr1uIr0uP/dZCA9xZoQZzoEPJP4XGSzjmRkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJgOs2kuzVf25YzJ20xbabuyL2eMX/nOn6azdF7ZlzPGr3znH9NTeq7syxn/N+o+0Nao+0Bb7sOwuA9/1/Wf33c2ZMtpJa2mhbSYlhqv19J62qicr+s/v+9syPbTQTpMO2k37TVeH6XjdFI5X9c3vu9syK7TTbpNF+kyXTVe36X79FA5X9c3vu9syN7TR/pML+k1vTVef6Xv9DPhZwVgev0CaLU8PQ==
+  </data>
+ </layer>
+ <layer name="Middleground" width="100" height="100">
+  <data encoding="base64" compression="zlib">
+   eJzt1lkKgzAUBVB/Ou6j00I67H9FjR+hUmKsptrBc+BxESKE9zRaVQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADztQq1CLUcmNvpt/yX6jlcQ91C7ULtC5LhUnM4h7oUJP3l5hCfde/H+F6ZQ0zvx3iac3juX8m3IpW0S80h9q6rr86rtLqn6441m8Q9cQ7vOofmcl7l/udjTw+hjpl1p8Z12xymytw+fyE/0TPZnmOfH7JffsMzIR95BxoqYw8=
+  </data>
+ </layer>
+ <layer name="Foreground1" width="100" height="100">
+  <data encoding="base64" compression="zlib">
+   eJztwTEBAAAAwqD1T+1lC6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAbnEAAAQ==
+  </data>
+ </layer>
+ <layer name="Foreground2" width="100" height="100">
+  <data encoding="base64" compression="zlib">
+   eJztwTEBAAAAwqD1T+1lC6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAbnEAAAQ==
+  </data>
+ </layer>
+ <layer name="Foreground3" width="100" height="100">
+  <data encoding="base64" compression="zlib">
+   eJztwTEBAAAAwqD1T+1lC6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAbnEAAAQ==
+  </data>
+ </layer>
+</map>
