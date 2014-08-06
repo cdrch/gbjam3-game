@@ -38,6 +38,7 @@ BasicGame.Preloader.prototype = {
     
     this.load.tilemap('level1', 'assets/level1_v1_0_0.json', null, Phaser.Tilemap.TILED_JSON);
     this.load.tilemap('level2', 'assets/level2_v1_0_0.json', null, Phaser.Tilemap.TILED_JSON);
+    this.load.tilemap('rockmap', 'assets/rockTestMap', null, Phaser.Tilemap.TILED_JSON);
     this.load.image('tile-atlas-1', 'assets/gbjam3-game-tile-atlas-1.png');
     
     this.load.spritesheet('player_sheet', 'assets/faunanim2.png', 18, 46);

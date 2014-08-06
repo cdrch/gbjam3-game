@@ -194,6 +194,11 @@ BasicGame.Game.prototype = {
     
     if (this.input.keyboard.isDown(Phaser.Keyboard.X)) 
     {
+      this.showTileText();
+    }
+    
+    if (this.input.keyboard.isDown(Phaser.Keyboard.C)) 
+    {
       this.displayText();
     }
     
@@ -208,6 +213,12 @@ BasicGame.Game.prototype = {
     // this.game.physics.arcade.collide(this.foeGroup, collision_layer);
     this.game.physics.arcade.collide(this.player, this.foeGroup);
     // this.game.physics.arcade.collide(this.foeGroup, this.foeGroup);
+	},
+	
+	showTileText: function () {
+	 // var textBox = new Rectangle(0, 120, 160, 24);
+	  var currentText = this.add.text(10, 120, collision_layer.getTileXY(this.player.x, this.player.y).property('Text'), { font: "8px Arial", fill: "#000000", align: "center" });
+	  currentText.fixedToCamera = true;
 	},
 	
 	displayText: function () {
