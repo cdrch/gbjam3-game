@@ -37,6 +37,7 @@ var fG;
 
 // var p;
 var cursors;
+var currentText;
 
 // Global Statics
 
@@ -109,6 +110,7 @@ BasicGame.Game.prototype = {
     // The foreground tile laye
     foreground_layer = map.createLayer(FOREGROUND_LAYER_NAME);
         
+      map.setTileIndexCallback(32, this.quitGame, this);
 	},
 
 	update: function () {
@@ -120,7 +122,6 @@ BasicGame.Game.prototype = {
       this.checkCollision();
       this.processInput();
       
-      //map.setTileIndexCallback(2, this.quitGame, this);
 	},
 	
 	//  Create-related functions
@@ -217,14 +218,20 @@ BasicGame.Game.prototype = {
 	
 	showTileText: function () {
 	 // var textBox = new Rectangle(0, 120, 160, 24);
-	  var currentText = this.add.text(10, 120, collision_layer.getTileXY(this.player.x, this.player.y).property('Text'), { font: "8px Arial", fill: "#000000", align: "center" });
+	 //currentText.destroy();
+	  currentText = this.add.text(10, 120, 'Hello!', { font: "8px Arial", fill: "#000000", align: "center" });
 	  currentText.fixedToCamera = true;
 	},
 	
 	displayText: function () {
 	 // var textBox = new Rectangle(0, 120, 160, 24);
-	  var currentText = this.add.text(10, 120, BasicGame.gameInfo.levelPhrase[BasicGame.gameInfo.currentLevel], { font: "8px Arial", fill: "#000000", align: "center" });
+	 
+	  currentText = this.add.text(10, 120, BasicGame.gameInfo.levelPhrase[BasicGame.gameInfo.currentLevel], { font: "8px Arial", fill: "#000000", align: "center" });
 	  currentText.fixedToCamera = true;
+	},
+	
+	clearText: function () {
+	  currentText = '';
 	},
 	
 	//  Level-switching functions
