@@ -93,9 +93,9 @@ BasicGame.Game.prototype = {
     
     this.buttons.add(this.button);
     
-    // this.buttons.setSize(400, 50, -100, 20);
+    this.button.body.setSize(20, 7, 2, 1);
     
-    this.buttons.setAll('gravity.y', 0);
+    // this.buttons.setAll('gravity.y', 0); not working
     
     this.button.animations.play('up');
     
@@ -110,13 +110,15 @@ BasicGame.Game.prototype = {
     
     this.game.physics.enable(this.player);
     
-    this.physics.arcade.gravity.y = 250;
+    this.player.anchor.setTo(0.5, 0.5);
+    this.player.body.setSize(22, 31, 0, 1);
+    
+    this.physics.arcade.gravity.y = 1000;
 
     this.player.body.bounce.y = 0.0;
     this.player.body.linearDamping = 1;
     this.player.body.collideWorldBounds = true;
     
-    this.player.anchor.setTo(0.5, 0.5);
 
     this.camera.follow(this.player);
     
@@ -129,7 +131,7 @@ BasicGame.Game.prototype = {
     // The foreground tile laye
     foreground_layer = map.createLayer(FOREGROUND_LAYER_NAME);
         
-      map.setTileIndexCallback(32, this.quitGame, this);
+      // map.setTileIndexCallback(32, this.quitGame, this);
 	},
 
 	update: function () {
