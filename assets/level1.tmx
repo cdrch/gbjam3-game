@@ -2,15 +2,50 @@
 <map version="1.0" orientation="orthogonal" width="100" height="100" tilewidth="8" tileheight="8">
  <tileset firstgid="1" name="gbjam3-game-tile-atlas-1" tilewidth="8" tileheight="8">
   <image source="gbjam3-game-tile-atlas-1.png" width="256" height="256"/>
+  <tile id="0">
+   <properties>
+    <property name="Text" value="Hello!"/>
+   </properties>
+  </tile>
+  <tile id="64">
+   <properties>
+    <property name="Text" value="1"/>
+   </properties>
+  </tile>
+  <tile id="96">
+   <properties>
+    <property name="Text" value="  2"/>
+   </properties>
+  </tile>
+  <tile id="128">
+   <properties>
+    <property name="Text" value="    3"/>
+   </properties>
+  </tile>
+  <tile id="160">
+   <properties>
+    <property name="Text" value="        4"/>
+   </properties>
+  </tile>
+  <tile id="192">
+   <properties>
+    <property name="Text" value="          5"/>
+   </properties>
+  </tile>
+  <tile id="224">
+   <properties>
+    <property name="Text" value="            6"/>
+   </properties>
+  </tile>
  </tileset>
+ <layer name="Collision" width="100" height="100">
+  <data encoding="base64" compression="zlib">
+   eJzt1rlOw0AQANCk4JSAAhqgouAqgAJ+gaMBCvgNoID/FxORlayV7ZDYiW3pFU+j1bjIzuxsdjwajcYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAt2wm7Ya9knedYvqtwHW5K1nmO9uVn/jm8hNeSdZ6jffmZ/wif4atknedobtY8bIS1sL5g3O7BHoekah4mfXgMT+E0nDWIXe9xSMrmIe/DfXhoELve45DUzUOqZzrr5uNP3Tt/0Vzynz6kuKr52A8HPah7lbp3/qK5Yh/y+jX5ryiL8+73Ntz1oO5V6t758+bK+pBqN6uuq7qv3sJ7D+peJX/nT2q6WZFLtrJcsQ9t3UPLuq++w08HdT6ZxsNwFI6n67r3fKrpebio+e6ysK7qw6pi3e8cQuyiZmJ1XPb9Ic4XfwFgtJIN
+  </data>
+ </layer>
  <layer name="Foreground" width="100" height="100">
   <data encoding="base64" compression="zlib">
    eJztwTEBAAAAwqD1T+1lC6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAbnEAAAQ==
-  </data>
- </layer>
- <layer name="Collision" width="100" height="100">
-  <data encoding="base64" compression="zlib">
-   eJzt1rlOAzEQANCk4JSAAn6BqwAK+AWOBijgN4AC/l9MhCxWlr0h2Ry76BVPI2u2iGc8jsej0WgMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD/wF7YDweFdZ5j+S7CZbgqrPMci5ef+cfwFJ4L6zzH4uVn/i28h4/COs/R3bR52AobYXPOuNuDPQ5JbR4mfbgPD+E4nHSI697jkJTmIe/DbbjrENe9xyFpm4dUz3TWzcePtnf+vLnkL31IcVXzcRiOelD3mrZ3/ry5Zh/y+nX5ryjFWfd7HW56UPeatnf+rLlSH1LtptV1VffVS3jtQd1r8nf+pKbblVyyk+WafVjUPbSs++ozfPWg7knbez7V9DSctXx33ljX+rCq2PY7hxDXUTOxHpd9f4izxT6cCfE3fgMyAJ/k
   </data>
  </layer>
 </map>

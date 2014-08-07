@@ -78,16 +78,35 @@ BasicGame.Game.prototype = {
     collision_layer.resizeWorld();
     //  Un-comment this on to see the collision tiles
     // collision_layer.debug = true;
+    this.button = this.add.sprite(760, 768, 'button_sheet');
+    this.button.down = false;
     
+    this.button.animations.add('up', [0], 60, false);
+    this.button.animations.add('down', [1], 60, false);
+    
+    // this.game.physics.enable(this.button)
+    
+    this.buttons = this.add.group();
+    
+    this.buttons.enableBody = true;
+    this.buttons.physicsBodyType = Phaser.Physics.ARCADE;
+    
+    this.buttons.add(this.button);
+    
+    // this.buttons.setSize(400, 50, -100, 20);
+    
+    this.buttons.setAll('gravity.y', 0);
+    
+    this.button.animations.play('up');
     
     this.player = this.add.sprite(BasicGame.playerInfo.playerX, BasicGame.playerInfo.playerY, 'player_sheet');
 
-    this.player.animations.add('walk_left', [3, 4, 5, 4], 9, true);
-    this.player.animations.add('walk_right', [2, 1, 0, 1], 9, true);
-    this.player.animations.add('face_left', [3], 9, true);
-    this.player.animations.add('face_right', [2], 9, true);
-    this.player.animations.add('jump_left', [4], 9, true);
-    this.player.animations.add('jump_right', [1], 9, true);
+    this.player.animations.add('walk_left', [4, 5, 6, 7], 9, true);
+    this.player.animations.add('walk_right', [0, 1, 2, 3], 9, true);
+    this.player.animations.add('face_left', [7], 9, true);
+    this.player.animations.add('face_right', [3], 9, true);
+    this.player.animations.add('jump_left', [9], 9, true);
+    this.player.animations.add('jump_right', [8], 9, true);
     
     this.game.physics.enable(this.player);
     
@@ -121,6 +140,15 @@ BasicGame.Game.prototype = {
     
       this.checkCollision();
       this.processInput();
+      
+      if(this.button.down === false)
+      {
+        this.button.animations.play('up');
+      }
+      else
+      {
+        this.button.animations.play('down');
+      }
       
 	},
 	
@@ -207,6 +235,18 @@ BasicGame.Game.prototype = {
     {
       this.goToLevel();
     }
+    
+    if (this.input.keyboard.isDown(Phaser.Keyboard.B))
+    {
+      if (this.button.down === false)
+      {
+        this.button.down = true;
+      }
+      else
+      {
+        this.button.down = false;
+      }
+    }
 	},
 	
 	checkCollision: function () {
@@ -214,6 +254,13 @@ BasicGame.Game.prototype = {
     // this.game.physics.arcade.collide(this.foeGroup, collision_layer);
     this.game.physics.arcade.collide(this.player, this.foeGroup);
     // this.game.physics.arcade.collide(this.foeGroup, this.foeGroup);
+    this.game.physics.arcade.overlap(this.player, this.buttons, this.buttonCheck);
+    this.game.physics.arcade.collide(this.buttons, collision_layer);
+    
+	},
+	
+	buttonCheck: function (p, b) {
+	  b.down = true;
 	},
 	
 	showTileText: function () {
@@ -234,6 +281,12 @@ BasicGame.Game.prototype = {
 	  currentText = '';
 	},
 	
+	// Puzzle functions
+	
+	pressButton: function (hit_button) {
+	  hit_button.animations.play('down');
+	},
+	
 	//  Level-switching functions
 	
 	goToLevel: function () {
@@ -246,7 +299,8 @@ BasicGame.Game.prototype = {
 
 		//  Every loop we need to render the un-scaled game canvas to the displayed scaled canvas:
 	   // this.debug.bodyInfo(p, 32, 120);
-	   //this.game.debug.body(this.player);
+	   this.game.debug.body(this.button);
+	   this.game.debug.body(this.player);
 	   BasicGame.pixel.context.drawImage(this.game.canvas, 0, 0, this.game.width, this.game.height, 0, 0, BasicGame.pixel.width, BasicGame.pixel.height);
 
 	},

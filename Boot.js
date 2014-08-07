@@ -1,8 +1,8 @@
 var BasicGame = {
 
     pixel: { scale: 4, canvas: null, context: null, width: 0, height: 0 },
-    playerInfo: { playerX: 20, playerY: 20},
-    gameInfo: { levelList: ['level1', 'level2'], levelPhrase: ['Greetings.', 'Now on Level 2!'], currentLevel: 0, lastLevel: 1 }
+    playerInfo: { playerX: 720, playerY: 750},
+    gameInfo: { levelList: ['level1', 'level2'], levelPhrase: ['Greetings.', 'Now on Level 2!'], levelButtonOrder: [[1], [1, 2, 3]], currentLevel: 0, lastLevel: 1 }
     
 
 };
