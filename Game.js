@@ -35,6 +35,8 @@ var starting_player_facing;
 
 var fG;
 
+var triggeredButtons = [];
+
 // var p;
 var cursors;
 var currentText;
@@ -78,11 +80,7 @@ BasicGame.Game.prototype = {
     collision_layer.resizeWorld();
     //  Un-comment this on to see the collision tiles
     // collision_layer.debug = true;
-    this.button = this.add.sprite(760, 768, 'button_sheet');
-    this.button.down = false;
     
-    this.button.animations.add('up', [0], 60, false);
-    this.button.animations.add('down', [1], 60, false);
     
     // this.game.physics.enable(this.button)
     
@@ -91,13 +89,15 @@ BasicGame.Game.prototype = {
     this.buttons.enableBody = true;
     this.buttons.physicsBodyType = Phaser.Physics.ARCADE;
     
-    this.buttons.add(this.button);
     
-    this.button.body.setSize(20, 7, 2, 1);
+    this.createButtons();
+    this.buttons.callAll('animations.add', 'animations', 'up', [0], 60, false);
+    this.buttons.callAll('animations.add', 'animations', 'down', [1], 60, false);
+    
+    
     
     // this.buttons.setAll('gravity.y', 0); not working
     
-    this.button.animations.play('up');
     
     this.player = this.add.sprite(BasicGame.playerInfo.playerX, BasicGame.playerInfo.playerY, 'player_sheet');
 
@@ -143,18 +143,42 @@ BasicGame.Game.prototype = {
       this.checkCollision();
       this.processInput();
       
-      if(this.button.down === false)
-      {
-        this.button.animations.play('up');
-      }
-      else
-      {
-        this.button.animations.play('down');
-      }
+      this.buttons.forEach(function (b) {
+        if(b.down === false)
+        {
+          b.animations.play('up');
+        }
+        else
+        {
+          b.animations.play('down');
+        }
+      });
+      
+      // if(this.button1.down === false)
+      // {
+      //   this.button1.animations.play('up');
+      // }
+      // else
+      // {
+      //   this.button1.animations.play('down');
+      // }
       
 	},
 	
 	//  Create-related functions
+	createButtons: function () {
+	  this.button1 = this.add.sprite(760, 768, 'button_sheet');
+    this.button1.down = false;
+    this.button1.key = 1;
+    this.buttons.add(this.button1);
+    this.button1.body.setSize(20, 7, 2, 1);
+    
+    this.button2 = this.add.sprite(720, 768, 'button_sheet');
+    this.button2.down = false;
+    this.button2.key = 2;
+    this.buttons.add(this.button2);
+    this.button2.body.setSize(20, 7, 2, 1);
+	},
 	
 	createTestBoxes: function() {
 	  this.foeGroup = this.add.group();
@@ -240,14 +264,9 @@ BasicGame.Game.prototype = {
     
     if (this.input.keyboard.isDown(Phaser.Keyboard.B))
     {
-      if (this.button.down === false)
-      {
-        this.button.down = true;
-      }
-      else
-      {
-        this.button.down = false;
-      }
+      this.buttons.forEach(function (b) {
+        b.down = false;
+      });
     }
 	},
 	
@@ -262,7 +281,31 @@ BasicGame.Game.prototype = {
 	},
 	
 	buttonCheck: function (p, b) {
-	  b.down = true;
+	  if (b.down === false)
+	  {
+	    triggeredButtons.push(b.key);
+  	  var reset = false;
+  	  for (var i = 0; i < triggeredButtons.length; i++)
+  	  {
+  	    if(triggeredButtons[i] === BasicGame.gameInfo.levelButtonOrder[BasicGame.gameInfo.currentLevel][i])
+  	    {
+  	      // Nothing happens; the puzzle is going well!
+  	    }
+  	    else
+  	    {
+  	      reset = true;
+  	    }
+  	  }
+  	  if(reset === true)
+  	  {
+  	    this.buttons.forEach(function (b) {
+          b.down = false;
+        });
+        triggeredButtons = [];
+  	  }
+  	  b.down = true;
+	  }
+	  
 	},
 	
 	showTileText: function () {
@@ -301,8 +344,8 @@ BasicGame.Game.prototype = {
 
 		//  Every loop we need to render the un-scaled game canvas to the displayed scaled canvas:
 	   // this.debug.bodyInfo(p, 32, 120);
-	   this.game.debug.body(this.button);
-	   this.game.debug.body(this.player);
+	   //this.game.debug.body(this.button1);
+	   //this.game.debug.body(this.player);
 	   BasicGame.pixel.context.drawImage(this.game.canvas, 0, 0, this.game.width, this.game.height, 0, 0, BasicGame.pixel.width, BasicGame.pixel.height);
 
 	},
