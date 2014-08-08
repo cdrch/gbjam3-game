@@ -36,6 +36,10 @@ var starting_player_facing;
 var fG;
 
 var triggeredButtons = [];
+var currentLevel = 0;
+var levelButtonOrder = [];
+
+var grav;
 
 // var p;
 var cursors;
@@ -51,6 +55,9 @@ BasicGame.Game.prototype = {
 	create: function () {
 
 		//	Honestly, just about anything could go here. It's YOUR game after all. Eat your heart out!
+		
+		currentLevel = BasicGame.gameInfo.currentLevel;
+		levelButtonOrder = BasicGame.gameInfo.levelButtonOrder[currentLevel];
 		
 		this.sea = this.add.tileSprite(0, 0, 1024, 768, 'sea');
     
@@ -132,6 +139,8 @@ BasicGame.Game.prototype = {
     foreground_layer = map.createLayer(FOREGROUND_LAYER_NAME);
         
       // map.setTileIndexCallback(32, this.quitGame, this);
+      
+      grav = this.physics.arcade.gravity;
 	},
 
 	update: function () {
@@ -285,9 +294,13 @@ BasicGame.Game.prototype = {
 	  var reset = false;
 	  for (var i = 0; i < triggeredButtons.length; i++)
 	  {
-	    if(triggeredButtons[i] === BasicGame.gameInfo.levelButtonOrder[BasicGame.gameInfo.currentLevel][i])
+	    
+	    if(triggeredButtons[i] == levelButtonOrder[i])
 	    {
 	      // Nothing happens; the puzzle is going well!
+	     // this.state.start('MainMenu');
+	     grav.y = 50;
+	     //this.debug.text('p', 10, 10);
 	    }
 	    else
 	    {
@@ -296,6 +309,10 @@ BasicGame.Game.prototype = {
 	  }
 	  
 	  b.down = true;
+	},
+	
+	isButtonInOrder: function (b) {
+	  
 	},
 	
 	showTileText: function () {
