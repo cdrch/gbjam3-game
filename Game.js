@@ -281,31 +281,21 @@ BasicGame.Game.prototype = {
 	},
 	
 	buttonCheck: function (p, b) {
-	  if (b.down === false)
+	  triggeredButtons.push(b.key);
+	  var reset = false;
+	  for (var i = 0; i < triggeredButtons.length; i++)
 	  {
-	    triggeredButtons.push(b.key);
-  	  var reset = false;
-  	  for (var i = 0; i < triggeredButtons.length; i++)
-  	  {
-  	    if(triggeredButtons[i] === BasicGame.gameInfo.levelButtonOrder[BasicGame.gameInfo.currentLevel][i])
-  	    {
-  	      // Nothing happens; the puzzle is going well!
-  	    }
-  	    else
-  	    {
-  	      reset = true;
-  	    }
-  	  }
-  	  if(reset === true)
-  	  {
-  	    this.buttons.forEach(function (b) {
-          b.down = false;
-        });
-        triggeredButtons = [];
-  	  }
-  	  b.down = true;
+	    if(triggeredButtons[i] === BasicGame.gameInfo.levelButtonOrder[BasicGame.gameInfo.currentLevel][i])
+	    {
+	      // Nothing happens; the puzzle is going well!
+	    }
+	    else
+	    {
+	      reset = true;
+	    }
 	  }
 	  
+	  b.down = true;
 	},
 	
 	showTileText: function () {
