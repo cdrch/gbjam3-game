@@ -171,7 +171,6 @@ BasicGame.Game.prototype = {
       // {
       //   this.button1.animations.play('down');
       // }
-      
 	},
 	
 	//  Create-related functions
@@ -182,7 +181,7 @@ BasicGame.Game.prototype = {
     this.buttons.add(this.button1);
     this.button1.body.setSize(20, 7, 2, 1);
     
-    this.button2 = this.add.sprite(720, 768, 'button_sheet');
+    this.button2 = this.add.sprite(600, 768, 'button_sheet');
     this.button2.down = false;
     this.button2.key = 2;
     this.buttons.add(this.button2);
@@ -299,8 +298,12 @@ BasicGame.Game.prototype = {
 	    {
 	      // Nothing happens; the puzzle is going well!
 	     // this.state.start('MainMenu');
-	     grav.y = 50;
+	     
 	     //this.debug.text('p', 10, 10);
+	     if (triggeredButtons.length >= 200)
+	     {
+	       grav.y = 50;
+	     }
 	    }
 	    else
 	    {
