@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="10" height="5" tilewidth="16" tileheight="16">
+ <tileset firstgid="1" name="faunfont" tilewidth="16" tileheight="16">
+  <image source="../../Downloads/faunfont.png" width="160" height="96"/>
+ </tileset>
+ <layer name="Tile Layer 1" width="10" height="5">
+  <data encoding="base64" compression="zlib">
+   eJxjZGBgYANiESBmBWIhIDYCYkYg5oFiOag8B1SNEVQPSI0oEPMBsTBUXBzJHJhabJgFKi8MNRuknh+IJaHiLFB1PFBxkB3sSG5jh4pLQ8UAjosEKA==
+  </data>
+ </layer>
+</map>

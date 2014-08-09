@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="100" height="100" tilewidth="8" tileheight="8">
+ <tileset firstgid="1" name="gbjam3-game-tile-atlas-1" tilewidth="8" tileheight="8">
+  <image source="gbjam3-game-tile-atlas-1.png" width="256" height="256"/>
+  <tile id="0">
+   <properties>
+    <property name="Text" value="Hello!"/>
+   </properties>
+  </tile>
+  <tile id="64">
+   <properties>
+    <property name="Text" value="1"/>
+   </properties>
+  </tile>
+  <tile id="96">
+   <properties>
+    <property name="Text" value="  2"/>
+   </properties>
+  </tile>
+  <tile id="128">
+   <properties>
+    <property name="Text" value="    3"/>
+   </properties>
+  </tile>
+  <tile id="160">
+   <properties>
+    <property name="Text" value="        4"/>
+   </properties>
+  </tile>
+  <tile id="192">
+   <properties>
+    <property name="Text" value="          5"/>
+   </properties>
+  </tile>
+  <tile id="224">
+   <properties>
+    <property name="Text" value="            6"/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer name="Collision" width="100" height="100">
+  <data encoding="base64" compression="zlib">
+   eJzt1jtOAzEQANCk4CsBBVyAgl8BFHABCj4NUMAFOABQwAU4CkfhKNyESbFSZK0XEjsJK73iaeTMylrPrB0PB4PBEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAoLKNsBm2WsZpjtk7DifhtGWc5qgv/eZvw124bxmnOepLv/nn8BJeW8ZpjnK/7YeVsBSWp4zr/2CNfZLbD6M+XIebsBf2C+Ki19gnbfsh7cNluCqIi1rbd8aia96laz809Wy+9b7tj6+M0nm77vnT5hp/6UMT57U/tsNOhbp9ZpTO23XPnzY33oe0fiX/FW1x0vWehfMKdfvIKJ23654/aa6tD03tfqvrvM6rh/BYoW5PGaXzpvf8UU1XM7nGWpIb70Otc2hW59VbeK9Qt4uM3PO7md+77vNNTQ/CYcdzR2PjXB/mFbvesw9xETUT83HW54c4WfwBeMKmAg==
+  </data>
+ </layer>
+ <layer name="Foreground" width="100" height="100">
+  <data encoding="base64" compression="zlib">
+   eJztwTEBAAAAwqD1T+1lC6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAbnEAAAQ==
+  </data>
+ </layer>
+</map>

@@ -37,9 +37,9 @@ var currentLevel;
 var currentGrapes;
 var neededGrapes;
 var grapes;
-var door;
 
-var pickUpSound;
+
+var door;
 
 var grav;
 
@@ -52,6 +52,11 @@ var currentText;
 var COLLISION_LAYER_NAME = 'Collision';
 var FOREGROUND_LAYER_NAME = 'Foreground';
 
+
+
+var tilesetImage;
+var tilesetImageRef;
+
 BasicGame.Game.prototype = {
 
 	create: function () {
@@ -61,6 +66,8 @@ BasicGame.Game.prototype = {
 		currentGrapes = 0;
 		currentLevel = BasicGame.gameInfo.currentLevel;
 		neededGrapes = BasicGame.gameInfo.grapeCount[currentLevel];
+		tilesetImage = BasicGame.gameInfo.levelImage[currentLevel];
+		tilesetImageRef = BasicGame.gameInfo.levelImageFile[currentLevel];
 		
 		this.sea = this.add.tileSprite(0, 0, 1024, 768, 'sea');
     
@@ -70,7 +77,7 @@ BasicGame.Game.prototype = {
 
     map = this.add.tilemap(BasicGame.gameInfo.levelList[BasicGame.gameInfo.currentLevel]);
 
-    map.addTilesetImage('gbjam3-game-tile-atlas-1', 'tile-atlas-1');
+    map.addTilesetImage(tilesetImage, tilesetImageRef);
     
     // setCollision, or setCollisionBetween for ranges of tiles
     // map.setCollision(2);
@@ -96,13 +103,17 @@ BasicGame.Game.prototype = {
     // grapes.callAll('animations.add', 'animations', 'spin', [0, 1, 2, 3, 4, 5], 10, true);
     // grapes.callAll('animations.play', 'animations', 'spin');
     
-    door = this.add.sprite(BasicGame.levelInfo.doorX[currentLevel], BasicGame.levelInfo.doorY[currentLevel], 'door');
-    this.game.physics.enable(door);
-    door.animations.add('close', [1, 0], 1, false);
-    door.animations.add('open', [0, 1], 1, false);
-    door.open = false;
-    door.animations.play('close');
+
+    this.door = this.add.sprite(BasicGame.gameInfo.doorX[currentLevel], BasicGame.gameInfo.doorY[currentLevel], 'door');
+    this.door.open = false;
+    this.door.animations.add('close', [1, 0], 2, false);
+    this.door.animations.add('open', [0, 1], 2, false);
+    this.door.animations.play('close');
     
+    this.game.physics.enable(this.door);
+    
+    this.doorGroup = this.add.group();
+    this.doorGroup.add(this.door);
     
     this.player = this.add.sprite(BasicGame.playerInfo.playerX[currentLevel], BasicGame.playerInfo.playerY[currentLevel], 'player_sheet');
 
@@ -167,10 +178,9 @@ BasicGame.Game.prototype = {
     
       this.checkCollision();
       this.processInput();
-      if (currentGrapes >= 5)
+      if ((this.door.open === false) &&  currentGrapes >= 5)
       {
-        currentGrapes = 0;
-        this.state.start('MainMenu');
+        this.openDoor();
       }
       
       // if(this.button1.down === false)
@@ -186,6 +196,11 @@ BasicGame.Game.prototype = {
 	//  Create-related functions
 
 	//  Update-related functions
+	
+	openDoor: function () {
+	  this.door.animations.play('open');
+	  this.door.open = true;
+	},
 	
 	collectGrape: function (player, grape) {
 	  grape.kill();
@@ -259,12 +274,6 @@ BasicGame.Game.prototype = {
       this.goToLevel();
     }
     
-    if (this.input.keyboard.isDown(Phaser.Keyboard.B))
-    {
-      this.buttons.forEach(function (b) {
-        b.down = false;
-      });
-    }
 	},
 	
 	checkCollision: function () {
@@ -274,9 +283,11 @@ BasicGame.Game.prototype = {
     // this.game.physics.arcade.collide(this.foeGroup, this.foeGroup);
     this.game.physics.arcade.collide(grapes, collision_layer);
     this.game.physics.arcade.overlap(this.player, grapes, this.collectGrape, null, this);
-    if (door.open === true)
+
+    this.game.physics.arcade.collide(this.door, collision_layer);
+    if(this.door.open)
     {
-      this.game.physics.arcade.overlap(this.player, door, this.levelFinished, null, this);
+     this.game.physics.arcade.overlap(this.player, this.door, this.goToLevel(), null, this);
     }
 	},
 	
