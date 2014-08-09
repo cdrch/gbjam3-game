@@ -97,9 +97,11 @@ BasicGame.Game.prototype = {
     // grapes.callAll('animations.play', 'animations', 'spin');
     
     door = this.add.sprite(BasicGame.levelInfo.doorX[currentLevel], BasicGame.levelInfo.doorY[currentLevel], 'door');
-    door.animations.add('close', [], 1, false)
-    door.animations.add('open', [], 1, false)
+    this.game.physics.enable(door);
+    door.animations.add('close', [1, 0], 1, false);
+    door.animations.add('open', [0, 1], 1, false);
     door.open = false;
+    door.animations.play('close');
     
     
     this.player = this.add.sprite(BasicGame.playerInfo.playerX[currentLevel], BasicGame.playerInfo.playerY[currentLevel], 'player_sheet');

@@ -47,8 +47,7 @@ BasicGame.Preloader.prototype = {
     
     this.load.spritesheet('grape', 'assets/grape1.png', 8, 8);
     
-    // TODO: fix!
-    this.load.spritesheet('door', 'assets/doorTiles.png', 32, 32);
+    this.load.spritesheet('door', 'assets/doorTile2.png', 64, 81);
     
     this.load.audio('pickUp', ['assets/Zounds/pickUpGet.wav']);
 
