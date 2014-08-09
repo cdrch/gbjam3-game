@@ -10,12 +10,7 @@
  </layer>
  <layer name="Foreground" width="200" height="50">
   <data encoding="base64" compression="zlib">
-   eJzt1kkKwCAMAED9/6d7LQSpaSkYMgOC4IJbiGMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAPc75rA6AfeQEicQHAE7kCInEBwA75AgB68xeI7meyqtPDKXf+xzpO2Rt1eUOwJj7q+XJnmbHZvjul2nziA/Iui+oAZQ==
+   eJztwTEBAAAAwqD1T+1lC6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAbnEAAAQ==
   </data>
  </layer>
- <objectgroup name="Object Layer 1" width="200" height="50">
-  <object name="1" gid="257" x="172" y="353"/>
-  <object name="2" gid="257" x="222" y="343"/>
-  <object name="3" gid="257" x="261" y="357"/>
- </objectgroup>
 </map>

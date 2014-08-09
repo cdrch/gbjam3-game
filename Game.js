@@ -137,10 +137,14 @@ BasicGame.Game.prototype = {
     grapes.physicsBodyType = Phaser.Physics.ARCADE;
 
     //  And now we convert all of the Tiled objects with an ID of 256 into sprites within the grapes group
-    map.createFromObjects('Object Layer 1', 256, 'grape', 0, true, false, grapes);
+    // map.createFromObjects('Object Layer 1', 256, 'grape', 0, true, false, grapes);
     
-    grapes.callAll('animations.add', 'animations', 'a', [0], 10, true);
-    grapes.callAll('animations.play', 'animations', 'a');
+    // grapes.callAll('animations.add', 'animations', 'a', [0], 10, true);
+    // grapes.callAll('animations.play', 'animations', 'a');
+    for(var i = 0; i < 5; i++)
+    {
+      grapes.create(Math.random() * 1000 + 00,100, 'grape');
+    }
 	},
 
 	update: function () {
@@ -151,9 +155,9 @@ BasicGame.Game.prototype = {
     
       this.checkCollision();
       this.processInput();
-      if (currentGrapes >= 1)
+      if (currentGrapes >= 5)
       {
-        grav.x = 10000;
+        this.state.start('MainMenu');
       }
       
       // if(this.button1.down === false)
@@ -171,9 +175,8 @@ BasicGame.Game.prototype = {
 	//  Update-related functions
 	
 	collectGrape: function (player, grape) {
+	  grape.kill();
 	  currentGrapes++;
-	  grape.kill;
-	  
 	},
 	
 	processInput: function () {
@@ -251,6 +254,7 @@ BasicGame.Game.prototype = {
     // this.game.physics.arcade.collide(this.foeGroup, collision_layer);
     this.game.physics.arcade.collide(this.player, this.foeGroup);
     // this.game.physics.arcade.collide(this.foeGroup, this.foeGroup);
+    this.game.physics.arcade.collide(grapes, collision_layer);
     this.game.physics.arcade.overlap(this.player, grapes, this.collectGrape, null, this);
 	},
 	
