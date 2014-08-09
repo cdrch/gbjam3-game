@@ -34,10 +34,12 @@ var foreground_layer;
 var starting_player_facing;
 
 var currentLevel;
-var currentGrapes = 0;
+var currentGrapes;
 var neededGrapes;
 var grapes;
-var obj_layer
+var door;
+
+var pickUpSound;
 
 var grav;
 
@@ -56,6 +58,7 @@ BasicGame.Game.prototype = {
 
 		//	Honestly, just about anything could go here. It's YOUR game after all. Eat your heart out!
 		
+		currentGrapes = 0;
 		currentLevel = BasicGame.gameInfo.currentLevel;
 		neededGrapes = BasicGame.gameInfo.grapeCount[currentLevel];
 		
@@ -93,8 +96,13 @@ BasicGame.Game.prototype = {
     // grapes.callAll('animations.add', 'animations', 'spin', [0, 1, 2, 3, 4, 5], 10, true);
     // grapes.callAll('animations.play', 'animations', 'spin');
     
+    door = this.add.sprite(BasicGame.levelInfo.doorX[currentLevel], BasicGame.levelInfo.doorY[currentLevel], 'door');
+    door.animations.add('close', [], 1, false)
+    door.animations.add('open', [], 1, false)
+    door.open = false;
     
-    this.player = this.add.sprite(BasicGame.playerInfo.playerX, BasicGame.playerInfo.playerY, 'player_sheet');
+    
+    this.player = this.add.sprite(BasicGame.playerInfo.playerX[currentLevel], BasicGame.playerInfo.playerY[currentLevel], 'player_sheet');
 
     this.player.animations.add('walk_left', [4, 5, 6, 7], 9, true);
     this.player.animations.add('walk_right', [0, 1, 2, 3], 9, true);
@@ -145,6 +153,8 @@ BasicGame.Game.prototype = {
     {
       grapes.create(Math.random() * 1000 + 00,100, 'grape');
     }
+    
+    pickUpSound = this.add.audio('pickUp');
 	},
 
 	update: function () {
@@ -157,6 +167,7 @@ BasicGame.Game.prototype = {
       this.processInput();
       if (currentGrapes >= 5)
       {
+        currentGrapes = 0;
         this.state.start('MainMenu');
       }
       
@@ -176,7 +187,12 @@ BasicGame.Game.prototype = {
 	
 	collectGrape: function (player, grape) {
 	  grape.kill();
+	  pickUpSound.play();
 	  currentGrapes++;
+	  if(currentGrapes >= neededGrapes)
+	  {
+	    this.openDoor();
+	  }
 	},
 	
 	processInput: function () {
@@ -256,6 +272,10 @@ BasicGame.Game.prototype = {
     // this.game.physics.arcade.collide(this.foeGroup, this.foeGroup);
     this.game.physics.arcade.collide(grapes, collision_layer);
     this.game.physics.arcade.overlap(this.player, grapes, this.collectGrape, null, this);
+    if (door.open === true)
+    {
+      this.game.physics.arcade.overlap(this.player, door, this.levelFinished, null, this);
+    }
 	},
 	
 	showTileText: function () {
@@ -279,10 +299,17 @@ BasicGame.Game.prototype = {
 	// Puzzle functions
 	
 	//  Level-switching functions
+	openDoor: function () {
+	  door.play('open');
+	  door.open = true;
+	},
+	
+	
+	levelFinished: function () {
+	  this.goToLevel();
+	},
 	
 	goToLevel: function () {
-	  BasicGame.playerInfo.playerX = 100;
-	  BasicGame.playerInfo.playerY = 650;
 	  this.state.start('LevelSwitcher');
 	},
 	
