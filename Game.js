@@ -33,11 +33,11 @@ var collision_layer;
 var foreground_layer;
 var starting_player_facing;
 
-var fG;
-
-var triggeredButtons = [];
-var currentLevel = 0;
-var levelButtonOrder = [];
+var currentLevel;
+var currentGrapes = 0;
+var neededGrapes;
+var grapes;
+var obj_layer
 
 var grav;
 
@@ -57,7 +57,7 @@ BasicGame.Game.prototype = {
 		//	Honestly, just about anything could go here. It's YOUR game after all. Eat your heart out!
 		
 		currentLevel = BasicGame.gameInfo.currentLevel;
-		levelButtonOrder = BasicGame.gameInfo.levelButtonOrder[currentLevel];
+		neededGrapes = BasicGame.gameInfo.grapeCount[currentLevel];
 		
 		this.sea = this.add.tileSprite(0, 0, 1024, 768, 'sea');
     
@@ -88,22 +88,10 @@ BasicGame.Game.prototype = {
     //  Un-comment this on to see the collision tiles
     // collision_layer.debug = true;
     
-    
-    // this.game.physics.enable(this.button)
-    
-    this.buttons = this.add.group();
-    
-    this.buttons.enableBody = true;
-    this.buttons.physicsBodyType = Phaser.Physics.ARCADE;
-    
-    
-    this.createButtons();
-    this.buttons.callAll('animations.add', 'animations', 'up', [0], 60, false);
-    this.buttons.callAll('animations.add', 'animations', 'down', [1], 60, false);
-    
-    
-    
-    // this.buttons.setAll('gravity.y', 0); not working
+
+    //  Add animations to all of the grape sprites
+    // grapes.callAll('animations.add', 'animations', 'spin', [0, 1, 2, 3, 4, 5], 10, true);
+    // grapes.callAll('animations.play', 'animations', 'spin');
     
     
     this.player = this.add.sprite(BasicGame.playerInfo.playerX, BasicGame.playerInfo.playerY, 'player_sheet');
@@ -138,9 +126,21 @@ BasicGame.Game.prototype = {
     // The foreground tile laye
     foreground_layer = map.createLayer(FOREGROUND_LAYER_NAME);
         
+    // obj_layer = map.createLayer('Object Layer 1');
       // map.setTileIndexCallback(32, this.quitGame, this);
       
       grav = this.physics.arcade.gravity;
+      
+      //  Here we create our grapes
+    grapes = this.game.add.group();
+    grapes.enableBody = true;
+    grapes.physicsBodyType = Phaser.Physics.ARCADE;
+
+    //  And now we convert all of the Tiled objects with an ID of 256 into sprites within the grapes group
+    map.createFromObjects('Object Layer 1', 256, 'grape', 0, true, false, grapes);
+    
+    grapes.callAll('animations.add', 'animations', 'a', [0], 10, true);
+    grapes.callAll('animations.play', 'animations', 'a');
 	},
 
 	update: function () {
@@ -151,17 +151,10 @@ BasicGame.Game.prototype = {
     
       this.checkCollision();
       this.processInput();
-      
-      this.buttons.forEach(function (b) {
-        if(b.down === false)
-        {
-          b.animations.play('up');
-        }
-        else
-        {
-          b.animations.play('down');
-        }
-      });
+      if (currentGrapes >= 1)
+      {
+        grav.x = 10000;
+      }
       
       // if(this.button1.down === false)
       // {
@@ -174,39 +167,14 @@ BasicGame.Game.prototype = {
 	},
 	
 	//  Create-related functions
-	createButtons: function () {
-	  this.button1 = this.add.sprite(760, 768, 'button_sheet');
-    this.button1.down = false;
-    this.button1.key = 1;
-    this.buttons.add(this.button1);
-    this.button1.body.setSize(20, 7, 2, 1);
-    
-    this.button2 = this.add.sprite(600, 768, 'button_sheet');
-    this.button2.down = false;
-    this.button2.key = 2;
-    this.buttons.add(this.button2);
-    this.button2.body.setSize(20, 7, 2, 1);
-	},
-	
-	createTestBoxes: function() {
-	  this.foeGroup = this.add.group();
-    
-    this.foeGroup.enableBody = true;
-    this.foeGroup.physicsBodyType = Phaser.Physics.ARCADE;
-    
-    for (var i = 0; i < 16; i++)
-    {
-      //  This creates a new Phaser.Sprite instance within the group
-      //  It will be randomly placed within the world and use the 'baddie' image to display
-      var x = this.foeGroup.create(10 + i * 20, 560, 'player');
-      x.body.gravity.y = 200;
-      x.body.collideWorldBounds = true;
-    }
-    
-    fG = this.foeGroup;
-	},
-	
+
 	//  Update-related functions
+	
+	collectGrape: function (player, grape) {
+	  currentGrapes++;
+	  grape.kill;
+	  
+	},
 	
 	processInput: function () {
 	  this.player.body.velocity.x = 0;
@@ -283,39 +251,7 @@ BasicGame.Game.prototype = {
     // this.game.physics.arcade.collide(this.foeGroup, collision_layer);
     this.game.physics.arcade.collide(this.player, this.foeGroup);
     // this.game.physics.arcade.collide(this.foeGroup, this.foeGroup);
-    this.game.physics.arcade.overlap(this.player, this.buttons, this.buttonCheck);
-    this.game.physics.arcade.collide(this.buttons, collision_layer);
-    
-	},
-	
-	buttonCheck: function (p, b) {
-	  triggeredButtons.push(b.key);
-	  var reset = false;
-	  for (var i = 0; i < triggeredButtons.length; i++)
-	  {
-	    
-	    if(triggeredButtons[i] == levelButtonOrder[i])
-	    {
-	      // Nothing happens; the puzzle is going well!
-	     // this.state.start('MainMenu');
-	     
-	     //this.debug.text('p', 10, 10);
-	     if (triggeredButtons.length >= 200)
-	     {
-	       grav.y = 50;
-	     }
-	    }
-	    else
-	    {
-	      reset = true;
-	    }
-	  }
-	  
-	  b.down = true;
-	},
-	
-	isButtonInOrder: function (b) {
-	  
+    this.game.physics.arcade.overlap(this.player, grapes, this.collectGrape, null, this);
 	},
 	
 	showTileText: function () {
@@ -338,10 +274,6 @@ BasicGame.Game.prototype = {
 	
 	// Puzzle functions
 	
-	pressButton: function (hit_button) {
-	  hit_button.animations.play('down');
-	},
-	
 	//  Level-switching functions
 	
 	goToLevel: function () {
@@ -354,7 +286,7 @@ BasicGame.Game.prototype = {
 
 		//  Every loop we need to render the un-scaled game canvas to the displayed scaled canvas:
 	   // this.debug.bodyInfo(p, 32, 120);
-	   //this.game.debug.body(this.button1);
+	   //this.game.debug.body(this.grapes);
 	   //this.game.debug.body(this.player);
 	   BasicGame.pixel.context.drawImage(this.game.canvas, 0, 0, this.game.width, this.game.height, 0, 0, BasicGame.pixel.width, BasicGame.pixel.height);
 
