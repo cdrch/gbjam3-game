@@ -49,7 +49,7 @@ BasicGame.Preloader.prototype = {
     
     this.load.spritesheet('door', 'assets/doorTile2.png', 64, 81);
     
-    this.load.audio('pickUp', ['assets/Zounds/pickUpGet.wav']);
+    this.load.audio('pickUp', ['assets/Zounds/pickupGet.wav']);
 
 	},
 
