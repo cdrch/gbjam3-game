@@ -45,6 +45,9 @@ BasicGame.Preloader.prototype = {
     // this.load.image('textBox1', 'assets/TextBox1');
     // this.load.spritesheet('button_sheet', 'assets/button_v2.png', 24, 8);
     
+    this.load.audio('pickUpSound', ['assets/Zounds/pickupGet(1).ogg', 'assets/Zounds/pickupGet.wav']);
+    this.load.audio('theme', ['assets/Zounds/melodyBegin.wav']);
+    
     this.load.spritesheet('grape', 'assets/grape1.png', 8, 8);
     
     this.load.spritesheet('door', 'assets/doorTile2.png', 64, 81);

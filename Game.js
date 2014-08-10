@@ -52,7 +52,7 @@ var currentText;
 var COLLISION_LAYER_NAME = 'Collision';
 var FOREGROUND_LAYER_NAME = 'Foreground';
 
-
+var pickUpSound;
 
 var tilesetImage;
 var tilesetImageRef;
@@ -156,6 +156,7 @@ BasicGame.Game.prototype = {
     grapes = this.game.add.group();
     grapes.enableBody = true;
     grapes.physicsBodyType = Phaser.Physics.ARCADE;
+    // TODO: grapes.body.collideWorldBounds = true;
 
     //  And now we convert all of the Tiled objects with an ID of 256 into sprites within the grapes group
     // map.createFromObjects('Object Layer 1', 256, 'grape', 0, true, false, grapes);
@@ -164,10 +165,12 @@ BasicGame.Game.prototype = {
     // grapes.callAll('animations.play', 'animations', 'a');
     for(var i = 0; i < 5; i++)
     {
-      grapes.create(Math.random() * 1000 + 00,100, 'grape');
+      grapes.create(Math.random() * 100 + 200 * i, 100, 'grape');
     }
     
-    pickUpSound = this.add.audio('pickUp');
+    this.pickUpSound = this.add.audio('pickUp');
+    this.theme = this.add.audio('theme');
+    this.theme.play('', 0, 1, true, true);
 	},
 
 	update: function () {
@@ -178,10 +181,6 @@ BasicGame.Game.prototype = {
     
       this.checkCollision();
       this.processInput();
-      if ((this.door.open === false) &&  currentGrapes >= 5)
-      {
-        this.openDoor();
-      }
       
       // if(this.button1.down === false)
       // {
@@ -204,7 +203,7 @@ BasicGame.Game.prototype = {
 	
 	collectGrape: function (player, grape) {
 	  grape.kill();
-	  pickUpSound.play();
+	  this.pickUpSound.play();
 	  currentGrapes++;
 	  if(currentGrapes >= neededGrapes)
 	  {
@@ -285,9 +284,9 @@ BasicGame.Game.prototype = {
     this.game.physics.arcade.overlap(this.player, grapes, this.collectGrape, null, this);
 
     this.game.physics.arcade.collide(this.door, collision_layer);
-    if(this.door.open)
+    if(this.door.open && this.player.body.x <= 45)
     {
-     this.game.physics.arcade.overlap(this.player, this.door, this.goToLevel(), null, this);
+      this.levelFinished();
     }
 	},
 	
@@ -312,13 +311,10 @@ BasicGame.Game.prototype = {
 	// Puzzle functions
 	
 	//  Level-switching functions
-	openDoor: function () {
-	  door.play('open');
-	  door.open = true;
-	},
 	
 	
 	levelFinished: function () {
+	  this.theme.stop();
 	  this.goToLevel();
 	},
 	

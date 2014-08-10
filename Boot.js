@@ -3,7 +3,7 @@ var BasicGame = {
     pixel: { scale: 4, canvas: null, context: null, width: 0, height: 0 },
     playerInfo: { playerX: [10,10], playerY: [354,324]},
     gameInfo: { 
-        levelList: ['level1', 'level2'], levelPhrase: ['Find 50 grape bunches!.', 'Find 10 grape bunches!'], 
+        levelList: ['level1', 'level2'], levelPhrase: ['Level 1', 'Level 2'], 
         levelImage: ['gbjam3-game-tile-atlas-1','gbjam3-game-tile-atlas-1'], 
         levelImageFile: ['tile-atlas-1','tile-atlas-1'],
         grapeCount: [5, 10], doorX: [10, 10], doorY: [296, 10], currentLevel: 0, lastLevel: 0 
