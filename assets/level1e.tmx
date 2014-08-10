@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="200" height="50" tilewidth="8" tileheight="8">
+ <tileset firstgid="1" name="gbjam3-game-tile-atlas-1" tilewidth="8" tileheight="8">
+  <image source="../../Downloads/gbjam3-game-tile-atlas-1.png" width="256" height="256"/>
+ </tileset>
+ <layer name="Collision" width="200" height="50">
+  <data encoding="base64" compression="zlib">
+   eJzt2k1S2zAYBmCzIO1FSLvoNaBdcI+W+1+g8nQ09Wj059gmifIsnpGRIWgkvf5EyNM0TU8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAwFB+B386fdzAeOEexFzJDABbqCcAbKWWcKQvwXNwStp4/fUGxngJuWGLORc/g1/BS/AavCXmvm/B9+l+c7IkM7QsczHv/5iNpWVG5vvnaaycRKW85PrTvt7/5cjifcjVi2Uelu0yI/F65JzcknmdfgTv0/8z7rXHNLI1uUjzEevLeZKTz1yn5Xq83cDYRpTmIu7x3nqRy4p6cuw6lc671x7jSEr1It3/pXpR6kvriJwcs065+n7tsY6glYtcTcjlJb1u5UJO9lmn3DrIx/7zfc7Mb+69qUtqSi0XcrJ+nXpr97XHfo9K59bWfu/9Oq0fpToiJ/3r1HveVT/2m++Xjnnecs4q5cC5a906rTnv+vvj3/ydpvxnO0pt7v2/2j5Pr2v3SjnpqR+560fNyR7n3XR+1+yREdr0uRLrwLmjrzavvXW7VstLz7ZWBkq/L90Lo+Zky3m3dS99Rj1KW3oG1/pq81nak63XqOWhNvbXC+6PlpO9z7utZ80jtZde985163tqP1PK1Zp2zVrHnDxP9c8Tp/2njntHvd5R5910/v8CjPkHVA==
+  </data>
+ </layer>
+ <layer name="Foreground" width="200" height="50">
+  <data encoding="base64" compression="zlib">
+   eJztwTEBAAAAwqD1T+1lC6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAbnEAAAQ==
+  </data>
+ </layer>
+</map>
