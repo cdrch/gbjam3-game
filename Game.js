@@ -53,6 +53,7 @@ var COLLISION_LAYER_NAME = 'Collision';
 var FOREGROUND_LAYER_NAME = 'Foreground';
 
 var pickUpSound;
+var gateSound;
 
 var tilesetImage;
 var tilesetImageRef;
@@ -79,18 +80,9 @@ BasicGame.Game.prototype = {
 
     map.addTilesetImage(tilesetImage, tilesetImageRef);
     
-    // setCollision, or setCollisionBetween for ranges of tiles
-    // map.setCollision(2);
-    // map.setCollision(3);
-    // map.setCollision(4);
-    // map.setCollisionBetween(0,255);
-    // map.setCollisionBetween(4, 11);
-    // map.setCollisionBetween(36, 40);
-    // map.setCollisionBetween(68, 71);
+    this.setCollisionForTileset();
     
-    map.setCollisionBetween(4, 11);
-    map.setCollisionBetween(36, 40);
-    map.setCollisionBetween(68, 71);
+    
     
     collision_layer = map.createLayer(COLLISION_LAYER_NAME);
     
@@ -170,7 +162,8 @@ BasicGame.Game.prototype = {
     
     this.pickUpSound = this.add.audio('pickUp');
     this.theme = this.add.audio('theme');
-    this.theme.play('', 0, 1, true, true);
+    this.theme.play('', 0, 0.7, true, true);
+    this.gateSound = this.add.audio('gateFX');
 	},
 
 	update: function () {
@@ -193,11 +186,26 @@ BasicGame.Game.prototype = {
 	},
 	
 	//  Create-related functions
+	
+	setCollisionForTileset: function() {
+	  if(tilesetImage === 'gbjam3-game-tile-atlas-1')
+	  {
+	    // setCollision, or setCollisionBetween for ranges of tiles
+      map.setCollisionBetween(4, 11);
+      map.setCollisionBetween(36, 40);
+      map.setCollisionBetween(68, 71);
+	  }
+	  else
+	  {
+	    // WARNING: No collision!
+	  }
+	},
 
 	//  Update-related functions
 	
 	openDoor: function () {
 	  this.door.animations.play('open');
+	  this.gateSound.play();
 	  this.door.open = true;
 	},
 	
