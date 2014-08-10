@@ -279,7 +279,7 @@ BasicGame.Game.prototype = {
     
     if (this.input.keyboard.isDown(Phaser.Keyboard.L)) 
     {
-      this.goToLevel();
+      this.levelFinished();
     }
     
 	},
