@@ -192,8 +192,9 @@ BasicGame.Game.prototype = {
 	  {
 	    // setCollision, or setCollisionBetween for ranges of tiles
       map.setCollisionBetween(4, 11);
-      map.setCollisionBetween(36, 40);
-      map.setCollisionBetween(68, 71);
+      map.setCollisionBetween(36, 43);
+      map.setCollisionBetween(68, 75);
+      map.setCollisionBetween(100, 107);
 	  }
 	  else
 	  {
