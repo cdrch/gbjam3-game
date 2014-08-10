@@ -1,8 +1,8 @@
 var BasicGame = {
 
     pixel: { scale: 4, canvas: null, context: null, width: 0, height: 0 },
-    playerInfo: { playerX: 20, playerY: 20},
-    gameInfo: { levelList: ['level1', 'level2'], levelPhrase: ['Greetings.', 'Now on Level 2!'], currentLevel: 0, lastLevel: 1 }
+    playerInfo: { playerX: [10, 10], playerY: [324, 324]},
+    gameInfo: { levelList: ['level1', 'level2'], levelPhrase: ['Find 50 grape bunches!.', 'Find 10 grape bunches!'], doorX: [50, 50], doorY: [100, 100], grapeCount: [5, 10], currentLevel: 0, lastLevel: 1 }
     
 
 };

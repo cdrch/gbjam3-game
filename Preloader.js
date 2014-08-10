@@ -36,12 +36,20 @@ BasicGame.Preloader.prototype = {
     this.load.tilemap('layertest2', 'assets/layertest2.json', null, Phaser.Tilemap.TILED_JSON);
     this.load.tilemap('layertest3', 'assets/layertest3.json', null, Phaser.Tilemap.TILED_JSON);
     
-    this.load.tilemap('level1', 'assets/level1_v1_0_0.json', null, Phaser.Tilemap.TILED_JSON);
+    this.load.tilemap('level1', 'assets/level1.json', null, Phaser.Tilemap.TILED_JSON);
     this.load.tilemap('level2', 'assets/level2_v1_0_0.json', null, Phaser.Tilemap.TILED_JSON);
-    this.load.tilemap('rockmap', 'assets/rockTestMap', null, Phaser.Tilemap.TILED_JSON);
+    // this.load.tilemap('rockmap', 'assets/rockTestMap', null, Phaser.Tilemap.TILED_JSON);
     this.load.image('tile-atlas-1', 'assets/gbjam3-game-tile-atlas-1.png');
+    this.load.spritesheet('player_sheet', 'assets/faunWalk3.png', 32, 32);
     
-    this.load.spritesheet('player_sheet', 'assets/faunanim2.png', 18, 46);
+    // this.load.image('textBox1', 'assets/TextBox1');
+    // this.load.spritesheet('button_sheet', 'assets/button_v2.png', 24, 8);
+    
+    this.load.spritesheet('grape', 'assets/grape1.png', 8, 8);
+    
+    this.load.spritesheet('door', 'assets/doorTile2.png', 64, 81);
+    
+    this.load.audio('pickUp', ['assets/Zounds/pickupGet.wav']);
 
 	},
 

@@ -2,13 +2,12 @@
 <html>
 <head>
 	<meta charset="UTF-8" />
-	<title>Phaser Pixel Perfect Scale Project Template</title>
+	<title>GBJam3 Game</title>
 	<script src="phaser.min.js"></script>
 	<script src="Boot.js"></script>
 	<script src="Preloader.js"></script>
 	<script src="MainMenu.js"></script>
 	<script src="Game.js"></script>
-	<script src="Level.js"></script>
 	<script src="LevelSwitcher.js"></script>
 </head>
 <body>
@@ -27,7 +26,6 @@ window.onload = function() {
 	game.state.add('Preloader', BasicGame.Preloader);
 	game.state.add('MainMenu', BasicGame.MainMenu);
 	game.state.add('Game', BasicGame.Game);
-	game.state.add('Level', BasicGame.Level);
 	game.state.add('LevelSwitcher', BasicGame.LevelSwitcher);
 
 	//	Now start the Boot state.

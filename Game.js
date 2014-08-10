@@ -33,10 +33,19 @@ var collision_layer;
 var foreground_layer;
 var starting_player_facing;
 
-var fG;
+var currentLevel;
+var currentGrapes;
+var neededGrapes;
+var grapes;
+var door;
+
+var pickUpSound;
+
+var grav;
 
 // var p;
 var cursors;
+var currentText;
 
 // Global Statics
 
@@ -48,6 +57,10 @@ BasicGame.Game.prototype = {
 	create: function () {
 
 		//	Honestly, just about anything could go here. It's YOUR game after all. Eat your heart out!
+		
+		currentGrapes = 0;
+		currentLevel = BasicGame.gameInfo.currentLevel;
+		neededGrapes = BasicGame.gameInfo.grapeCount[currentLevel];
 		
 		this.sea = this.add.tileSprite(0, 0, 1024, 768, 'sea');
     
@@ -78,25 +91,39 @@ BasicGame.Game.prototype = {
     //  Un-comment this on to see the collision tiles
     // collision_layer.debug = true;
     
-    
-    this.player = this.add.sprite(BasicGame.playerInfo.playerX, BasicGame.playerInfo.playerY, 'player_sheet');
 
-    this.player.animations.add('walk_left', [3, 4, 5, 4], 9, true);
-    this.player.animations.add('walk_right', [2, 1, 0, 1], 9, true);
-    this.player.animations.add('face_left', [3], 9, true);
-    this.player.animations.add('face_right', [2], 9, true);
-    this.player.animations.add('jump_left', [4], 9, true);
-    this.player.animations.add('jump_right', [1], 9, true);
+    //  Add animations to all of the grape sprites
+    // grapes.callAll('animations.add', 'animations', 'spin', [0, 1, 2, 3, 4, 5], 10, true);
+    // grapes.callAll('animations.play', 'animations', 'spin');
+    
+    door = this.add.sprite(BasicGame.levelInfo.doorX[currentLevel], BasicGame.levelInfo.doorY[currentLevel], 'door');
+    this.game.physics.enable(door);
+    door.animations.add('close', [1, 0], 1, false);
+    door.animations.add('open', [0, 1], 1, false);
+    door.open = false;
+    door.animations.play('close');
+    
+    
+    this.player = this.add.sprite(BasicGame.playerInfo.playerX[currentLevel], BasicGame.playerInfo.playerY[currentLevel], 'player_sheet');
+
+    this.player.animations.add('walk_left', [4, 5, 6, 7], 9, true);
+    this.player.animations.add('walk_right', [0, 1, 2, 3], 9, true);
+    this.player.animations.add('face_left', [7], 9, true);
+    this.player.animations.add('face_right', [3], 9, true);
+    this.player.animations.add('jump_left', [9], 9, true);
+    this.player.animations.add('jump_right', [8], 9, true);
     
     this.game.physics.enable(this.player);
     
-    this.physics.arcade.gravity.y = 250;
+    this.player.anchor.setTo(0.5, 0.5);
+    this.player.body.setSize(22, 31, 0, 1);
+    
+    this.physics.arcade.gravity.y = 1000;
 
     this.player.body.bounce.y = 0.0;
     this.player.body.linearDamping = 1;
     this.player.body.collideWorldBounds = true;
     
-    this.player.anchor.setTo(0.5, 0.5);
 
     this.camera.follow(this.player);
     
@@ -109,6 +136,27 @@ BasicGame.Game.prototype = {
     // The foreground tile laye
     foreground_layer = map.createLayer(FOREGROUND_LAYER_NAME);
         
+    // obj_layer = map.createLayer('Object Layer 1');
+      // map.setTileIndexCallback(32, this.quitGame, this);
+      
+      grav = this.physics.arcade.gravity;
+      
+      //  Here we create our grapes
+    grapes = this.game.add.group();
+    grapes.enableBody = true;
+    grapes.physicsBodyType = Phaser.Physics.ARCADE;
+
+    //  And now we convert all of the Tiled objects with an ID of 256 into sprites within the grapes group
+    // map.createFromObjects('Object Layer 1', 256, 'grape', 0, true, false, grapes);
+    
+    // grapes.callAll('animations.add', 'animations', 'a', [0], 10, true);
+    // grapes.callAll('animations.play', 'animations', 'a');
+    for(var i = 0; i < 5; i++)
+    {
+      grapes.create(Math.random() * 1000 + 00,100, 'grape');
+    }
+    
+    pickUpSound = this.add.audio('pickUp');
 	},
 
 	update: function () {
@@ -119,31 +167,35 @@ BasicGame.Game.prototype = {
     
       this.checkCollision();
       this.processInput();
+      if (currentGrapes >= 5)
+      {
+        currentGrapes = 0;
+        this.state.start('MainMenu');
+      }
       
-      //map.setTileIndexCallback(2, this.quitGame, this);
+      // if(this.button1.down === false)
+      // {
+      //   this.button1.animations.play('up');
+      // }
+      // else
+      // {
+      //   this.button1.animations.play('down');
+      // }
 	},
 	
 	//  Create-related functions
-	
-	createTestBoxes: function() {
-	  this.foeGroup = this.add.group();
-    
-    this.foeGroup.enableBody = true;
-    this.foeGroup.physicsBodyType = Phaser.Physics.ARCADE;
-    
-    for (var i = 0; i < 16; i++)
-    {
-      //  This creates a new Phaser.Sprite instance within the group
-      //  It will be randomly placed within the world and use the 'baddie' image to display
-      var x = this.foeGroup.create(10 + i * 20, 560, 'player');
-      x.body.gravity.y = 200;
-      x.body.collideWorldBounds = true;
-    }
-    
-    fG = this.foeGroup;
-	},
-	
+
 	//  Update-related functions
+	
+	collectGrape: function (player, grape) {
+	  grape.kill();
+	  pickUpSound.play();
+	  currentGrapes++;
+	  if(currentGrapes >= neededGrapes)
+	  {
+	    this.openDoor();
+	  }
+	},
 	
 	processInput: function () {
 	  this.player.body.velocity.x = 0;
@@ -206,6 +258,13 @@ BasicGame.Game.prototype = {
     {
       this.goToLevel();
     }
+    
+    if (this.input.keyboard.isDown(Phaser.Keyboard.B))
+    {
+      this.buttons.forEach(function (b) {
+        b.down = false;
+      });
+    }
 	},
 	
 	checkCollision: function () {
@@ -213,25 +272,46 @@ BasicGame.Game.prototype = {
     // this.game.physics.arcade.collide(this.foeGroup, collision_layer);
     this.game.physics.arcade.collide(this.player, this.foeGroup);
     // this.game.physics.arcade.collide(this.foeGroup, this.foeGroup);
+    this.game.physics.arcade.collide(grapes, collision_layer);
+    this.game.physics.arcade.overlap(this.player, grapes, this.collectGrape, null, this);
+    if (door.open === true)
+    {
+      this.game.physics.arcade.overlap(this.player, door, this.levelFinished, null, this);
+    }
 	},
 	
 	showTileText: function () {
 	 // var textBox = new Rectangle(0, 120, 160, 24);
-	  var currentText = this.add.text(10, 120, collision_layer.getTileXY(this.player.x, this.player.y).property('Text'), { font: "8px Arial", fill: "#000000", align: "center" });
+	 //currentText.destroy();
+	  currentText = this.add.text(10, 120, 'Hello!', { font: "8px Arial", fill: "#000000", align: "center" });
 	  currentText.fixedToCamera = true;
 	},
 	
 	displayText: function () {
 	 // var textBox = new Rectangle(0, 120, 160, 24);
-	  var currentText = this.add.text(10, 120, BasicGame.gameInfo.levelPhrase[BasicGame.gameInfo.currentLevel], { font: "8px Arial", fill: "#000000", align: "center" });
+	 
+	  currentText = this.add.text(10, 120, BasicGame.gameInfo.levelPhrase[BasicGame.gameInfo.currentLevel], { font: "8px Arial", fill: "#000000", align: "center" });
 	  currentText.fixedToCamera = true;
 	},
 	
+	clearText: function () {
+	  currentText = '';
+	},
+	
+	// Puzzle functions
+	
 	//  Level-switching functions
+	openDoor: function () {
+	  door.play('open');
+	  door.open = true;
+	},
+	
+	
+	levelFinished: function () {
+	  this.goToLevel();
+	},
 	
 	goToLevel: function () {
-	  BasicGame.playerInfo.playerX = 100;
-	  BasicGame.playerInfo.playerY = 650;
 	  this.state.start('LevelSwitcher');
 	},
 	
@@ -239,6 +319,7 @@ BasicGame.Game.prototype = {
 
 		//  Every loop we need to render the un-scaled game canvas to the displayed scaled canvas:
 	   // this.debug.bodyInfo(p, 32, 120);
+	   //this.game.debug.body(this.grapes);
 	   //this.game.debug.body(this.player);
 	   BasicGame.pixel.context.drawImage(this.game.canvas, 0, 0, this.game.width, this.game.height, 0, 0, BasicGame.pixel.width, BasicGame.pixel.height);
 
