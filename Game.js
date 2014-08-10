@@ -108,6 +108,7 @@ BasicGame.Game.prototype = {
     this.doorGroup.add(this.door);
     
     this.player = this.add.sprite(BasicGame.playerInfo.playerX[currentLevel], BasicGame.playerInfo.playerY[currentLevel], 'player_sheet');
+    this.player.velMod = 1;
 
     this.player.animations.add('walk_left', [4, 5, 6, 7], 9, true);
     this.player.animations.add('walk_right', [0, 1, 2, 3], 9, true);
@@ -157,7 +158,7 @@ BasicGame.Game.prototype = {
     // grapes.callAll('animations.play', 'animations', 'a');
     for(var i = 0; i < 5; i++)
     {
-      grapes.create(Math.random() * 100 + 200 * i, 100, 'grape');
+      grapes.create(Math.random() * 1500 + 100, 100, 'grape');
     }
     
     this.pickUpSound = this.add.audio('pickUp');
@@ -235,24 +236,24 @@ BasicGame.Game.prototype = {
       }
 	  }
   
-    if (cursors.up.isDown)
+    if (cursors.up.isDown || this.input.keyboard.isDown(Phaser.Keyboard.X))
     {
       if (this.player.body.onFloor())
       {
-          this.player.body.velocity.y = -200;
+          this.player.body.velocity.y = -200 * this.player.velMod;
       }
     }
 
     if (cursors.left.isDown)
     {
       this.player.facing = 'left';
-      this.player.body.velocity.x = -150;
+      this.player.body.velocity.x = -150 * this.player.velMod;
       this.player.animations.play('walk_left');
     }
     else if (cursors.right.isDown)
     {
       this.player.facing = 'right';
-      this.player.body.velocity.x = 150;
+      this.player.body.velocity.x = 150 * this.player.velMod;
       this.player.animations.play('walk_right');
     }
     else
@@ -267,12 +268,19 @@ BasicGame.Game.prototype = {
       }
     }
     
-    if (this.input.keyboard.isDown(Phaser.Keyboard.X)) 
+    if (this.input.keyboard.isDown(Phaser.Keyboard.Z)) 
     {
-      this.showTileText();
+      if(this.player.velMod = 1)
+      {
+        this.player.velMod = 2;
+      }
+      if(this.player.velMod = 2)
+      {
+        this.player.velMod = 1;
+      }
     }
     
-    if (this.input.keyboard.isDown(Phaser.Keyboard.C)) 
+    if (this.input.keyboard.isDown(Phaser.Keyboard.T)) 
     {
       this.displayText();
     }

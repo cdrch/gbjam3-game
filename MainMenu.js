@@ -8,13 +8,13 @@ BasicGame.MainMenu.prototype = {
 
 	create: function () {
 		// this.add.sprite(0, 0, 'titlepage');
-        this.loadingText = this.add.text(80, 72, "Press Z or tap/click game to start", { font: "6px monospace", fill: "#fff" });
+        this.loadingText = this.add.text(80, 72, "Press X or tap/click game to start", { font: "6px monospace", fill: "#fff" });
 	    this.loadingText.anchor.setTo(0.5, 0.5);
 	},
 
 	update: function () {
 
-		if (this.input.keyboard.isDown(Phaser.Keyboard.Z) || this.input.activePointer.isDown) {
+		if (this.input.keyboard.isDown(Phaser.Keyboard.X) || this.input.activePointer.isDown) {
 	      this.startGame();
 	    }
 	    //  Do some nice funky main menu effect here
